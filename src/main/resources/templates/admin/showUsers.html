@@ -1,0 +1,23 @@
+<DOCTYPE html xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="container">
+        <h1>showUsers</h1>
+    </div>
+    <table>
+        <tr>
+            <th>NAME</th>
+        </tr>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.firstName}">Onions</td>
+        </tr>
+    </table>
+</body>
+</html>

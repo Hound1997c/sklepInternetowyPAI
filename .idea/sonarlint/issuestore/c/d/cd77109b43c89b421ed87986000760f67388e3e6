@@ -1,0 +1,9 @@
+
+isquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Õçáå8ÃØÄ¦-
+nsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(Ô‹œªüÿÿÿÿ8òþÓø¦-
+nsquid:CommentedOutCodeLine2"<This block of commented-out lines of code should be removed.(àÖŒßùÿÿÿÿ8»ýÃ‚¦-
+[
+squid:S106%"9Replace this use of System.out or System.err by a logger.(ö›ì¢üÿÿÿÿ8–™Ôø¦-
+[squid:UselessImportCheck"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8½ÔÓø¦-
+isquid:CommentedOutCodeLine+"<This block of commented-out lines of code should be removed.(ÙãÄ´8–™Ôø¦-
+{squid:S1488"]Immediately return this expression instead of assigning it to the temporary variable "model".(œôÕ¿8Ýáþù¦-

@@ -1,0 +1,283 @@
+<DOCTYPE html xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:th="http://www.w3.org/1999/xhtml">
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="templates/classes.css">
+        <link rel="stylesheet" href="classes.css">
+        <style>
+            body {font-family: "Lato", sans-serif}
+            .mySlides {display: none}
+        </style>
+
+        <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/uploadFileStyles.css}">
+
+        <title>userIndex</title>
+    </head>
+
+
+    <body>
+
+    <!-- Navbar -->
+    <div class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+            <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+            <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+            <a href="#band" class="w3-bar-item w3-button w3-padding-large w3-hide-small">USERS</a>
+            <a href="#tour" class="w3-bar-item w3-button w3-padding-large w3-hide-small">PRODUCTS</a>
+            <a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+            <div class="w3-dropdown-hover w3-hide-small">
+                <button class="w3-padding-large w3-button" title="More">MORE <i class="fa fa-caret-down"></i></button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="#" class="w3-bar-item w3-button">Merchandise</a>
+                    <a href="#" class="w3-bar-item w3-button">Extras</a>
+                    <a href="#" class="w3-bar-item w3-button">Media</a>
+                </div>
+            </div>
+            <form id="logoutForm" method="POST" action="${contextPath}/logout">
+                <div class="w3-bar-item w3-button w3-padding-large w3-hide-small">
+                    <a href="/" th:href="@{/logout}">logout</a>
+                </div>
+            </form>
+            <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right"><i class="fa fa-search"></i></a>
+        </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        <a href="#band" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">USERS</a>
+        <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">PRODUCTS</a>
+        <a href="#contact" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">CONTACT</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">MERCH</a>
+    </div>
+
+    <!-- Page content -->
+    < class="w3-content" style="max-width:2000px;margin-top:46px">
+
+
+        <div class="w3-container w3-content w3-center w3-padding-64"  id="band"> <!-- style="max-width:800px" -->
+            <h2 class="w3-wide">USERS</h2>
+            <p class="w3-opacity"><i>you can edit users</i></p>
+
+            <!-- Editable table class="w3-table"  class="table table-bordered table-responsive-md table-striped text-center" -->
+            <!--div class="card"-->
+                <!--h3 class="card-header text-center font-weight-bold text-uppercase py-4">Users</h3-->
+                <!--div class="card-body"  th:action="@{/admin/adminIndex/editUser}"-->
+
+                    <div class="w3-opacity" id="table" > <!--class="table-editable" onclick="location.href='/admin/adminIndex/editUser'"  th:field="*{firstName}"-->
+
+                        <table class="a100" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">Person Name</th>
+                                <th class="text-center">Person LastName</th>
+                                <th class="text-center">Person Email</th>
+                                <th class="text-center">Person Password</th>
+                                <th class="text-center">Person Money</th>
+                                <th class="text-center">Update</th>
+                                <th class="text-center">Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <p class="error-message"
+                                   th:if="${#fields.hasGlobalErrors()}"
+                                   th:each="error : ${#fields.errors('global')}"
+                                   th:text="${error}">Validation error</p>
+                            <tr th:each="user : ${userList}">
+                                <form role="form"  th:action="@{'/admin/adminIndex/editUser/'+ ${user.email}}" method="post" th:object="${modUser}">
+                                <td >
+                                    <input id="firstName" class="form-control" type="text" th:value="${user.firstName}" th:field="*{firstName}"/>
+                                </td>
+                                <td class="pt-3-half">
+                                    <input id="lastName" class="form-control" th:value="${user.lastName}" th:field="*{lastName}"/>
+                                </td>
+                                <td class="pt-3-half" id="email" th:text="${user.email}"/>
+                                <td class="pt-3-half">
+                                    <input id="password" class="form-control" th:value="password" th:field="*{password}"/>
+                                </td>
+                                <td class="pt-3-half">
+                                    <input id="money" class="form-control" th:value="${user.money}" th:field="*{money}"/>
+                                </td>
+                                <td>
+                                   <button type="submit" > Confirm </button>
+                                    <!-- th:href="@{'/admin/adminIndex/editUser/' + ${user.email}}"  -->
+                                </td>
+                                <td>
+                                    <span class="table-remove"><button class="btn btn-danger btn-rounded btn-sm my-0"
+                                                                       th:onclick="'window.location.href = \'' + @{'/admin/adminIndex/deleteUser/' + ${user.email}} + '\''"
+                                                                       type="button">Remove</button></span>
+                                </td>
+                                </form>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    </div>
+            </div>
+            <!-- Editable table -->
+        
+
+
+
+
+
+        <div class="w3-black" id="tour">
+            <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+                <h2 class="w3-wide w3-center">Your PRODUCTS</h2>
+
+                <table class="w3-table">
+                    <tr>
+                        <td></td>
+                    </tr>
+                </table>
+                <table class="w3-table">
+                    <tr>
+                        <th>Product Category</th>
+                        <th>Product Name</th>
+                        <th>Product Cost</th>
+                        <th>Photo</th>
+                        <th></th>
+                    </tr>
+                    <form th:action="@{'/admin/adminIndex/addProduct/'}" enctype="multipart/form-data" method="post" th:object="${prod}">
+                    <!--th:id="${prod.name}"-->
+                        <tr>
+                        <td>
+                            <select value="category" th:field="*{category}">
+                                <option value="food">food</option>
+                                <option value="vehicle">vehicle</option>
+                            </select>
+                        </td>
+                        <td><input value="name" th:field="*{name}"/></td>
+                        <td><input value="cost" th:field="*{cost}"/></td>
+                        <td>
+                            <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                            <!--input value="productImage" th:field="*{productImage}" type="file"/-->
+                        </td>
+                        <td><button type="submit">Add Product</button></td>
+                        </tr>
+                    </form>
+                    <tr th:each="prod : ${productList}">
+                        <td th:text="${prod.category}"/>
+                        <td th:text="${prod.name}"/>
+                        <td th:text="${prod.cost}"/>
+                        <td>
+                            <!--<div class="upload-content">
+                                <div class="single-upload">
+                                    <h3>Upload Single File</h3>
+                                    <form action="/admin/adminIndex" id="singleUploadForm" name="singleUploadForm" enctype="multipart/form-data" method="post">
+                                        <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                                        <button type="submit" class="primary submit-btn">Submit</button>
+                                    </form>
+                                    <div class="upload-response">
+                                        <div id="singleFileUploadError"></div>
+                                        <div id="singleFileUploadSuccess"></div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </td>
+                        <td> <a th:href="@{'/admin/adminIndex/deleteProduct/' + ${prod.name}}">Delete</a> </td>
+                    <!--<button th:onclick="'window.location.href = \'' + '/admin/adminIndex/deleteProduct/' + ${prod.name} +'\''">Delete</button> -->
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    <!--
+    <div class="upload-container">
+        <div class="upload-header">
+            <h2>Spring Boot File Upload / Download Rest API Example</h2>
+        </div>
+        <div class="upload-content">
+            <div class="single-upload">
+                <h3>Upload Single File</h3>
+                <form id="singleUploadForm" name="singleUploadForm">
+                    <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                    <button type="submit" class="primary submit-btn">Submit</button>
+                </form>
+                <div class="upload-response">
+                    <div id="singleFileUploadError"></div>
+                    <div id="singleFileUploadSuccess"></div>
+                </div>
+            </div>
+            <div class="multiple-upload">
+                <h3>Upload Multiple Files</h3>
+                <form id="multipleUploadForm" name="multipleUploadForm">
+                    <input id="multipleFileUploadInput" type="file" name="files" class="file-input" multiple required />
+                    <button type="submit" class="primary submit-btn">Submit</button>
+                </form>
+                <div class="upload-response">
+                    <div id="multipleFileUploadError"></div>
+                    <div id="multipleFileUploadSuccess"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/uploadFileFunctions.js}"></script>
+    -->
+
+        <!-- The Order Section -->
+        <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
+            <h2 class="w3-wide w3-center">Orders</h2>
+            <table class="w3-table">
+                <tr>
+                    <th>Customer</th>
+                    <th>Product Name</th>
+                    <th>Product Cost</th>
+                    <th>Product Amount</th>
+                    <th>Accet</th>
+                    <th>Deny</th>
+                </tr>
+                <tr th:each="order : ${orderList}">
+                    <td th:text="${order.user.email}"/>
+                    <td th:text="${order.product.name}"/>
+                    <td th:text="${order.product.cost}"/>
+                    <td th:text="${order.amount}"/>
+                    <td> <a th:href="@{'/admin/adminIndex/acceptOrder/' + ${order.user.email} + '/' + ${order.product.name}}">Accept</a></td>
+                    <td> <a th:href="@{'/admin/adminIndex/denyOrder/' + ${order.user.email} + '/' + ${order.product.name}}">Deny</a> </td>
+                    <!--<button th:onclick="'window.location.href = \'' + '/admin/adminIndex/deleteProduct/' + ${prod.name} +'\''">Delete</button> -->
+                </tr>
+            </table>
+
+        </div>
+
+        <!-- End Page Content -->
+
+
+    <script>
+        function addToBucket(param1) {
+            alert("you clicked this!" + param1)
+        }
+
+        // Used to toggle the menu on small screens when clicking on the menu button
+        function myFunction() {
+            var x = document.getElementById("navDemo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        var modal = document.getElementById('ticketModal');
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="js/uploadFilefunctions.js"></script>
+    </body>
+    </html>
+</DOCTYPE>
